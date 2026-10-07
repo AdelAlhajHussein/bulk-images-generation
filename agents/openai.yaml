@@ -1,0 +1,4 @@
+interface:
+  display_name: "Bulk Images Generation"
+  short_description: "Turn lesson sections into consistent educational images"
+  default_prompt: "Use $bulk-images-generation to read my entire lesson and create one consistent 16:9 educational image per section, with numbered files and a manifest."
