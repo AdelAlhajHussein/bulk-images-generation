@@ -50,7 +50,7 @@ py -3 bulk-images-generation/scripts/lesson_images.py block output/lesson-title-
 py -3 bulk-images-generation/scripts/lesson_images.py verify output/lesson-title-images/manifest.json
 ```
 
-Verification exits nonzero for incomplete entries, missing files, bad PNG signatures or dimensions, changed hashes, or extra PNGs in the folder. Header checks and hashes do not fully decode images or verify semantic correctness; visual review is required. Statuses are planned, blocked, and complete. Only attach --reviewed marks complete.
+Verification exits nonzero for incomplete entries, missing files, bad PNG signatures or dimensions, changed hashes, or extra PNGs in the folder. Dimensions may use nearest-whole-pixel height rounding for 16:9 (at most half a pixel); actual native dimensions are recorded without altering the image. Explicit exact-size user requests still require those exact dimensions. Header checks and hashes do not fully decode images or verify semantic correctness; visual review is required. Statuses are planned, blocked, and complete. Only attach --reviewed marks complete.
 
 ## Six-section test
 

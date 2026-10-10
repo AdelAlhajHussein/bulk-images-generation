@@ -149,8 +149,10 @@ def png_size(path):
             or zlib.crc32(header[12:29]) != struct.unpack('>I', header[29:33])[0]):
         raise ValueError(f'Invalid PNG header: {path}')
     width, height = struct.unpack('>II', header[16:24])
-    if not width or not height or width * 9 != height * 16:
-        raise ValueError(f'Expected exact 16:9 PNG; found {width} x {height}: {path}')
+    # A 16:9 render may round its height to the nearest whole pixel.
+    # Preserve the native image; never stretch or crop it to satisfy this check.
+    if width < 16 or not height or abs(width * 9 - height * 16) > 8:
+        raise ValueError(f'Expected 16:9 PNG (nearest-pixel rounding allowed); found {width} x {height}: {path}')
     return width, height
 
 

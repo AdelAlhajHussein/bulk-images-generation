@@ -72,6 +72,17 @@ class WorkflowTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             helper.attach(self.manifest, 1, image, False)
 
+    def test_whole_pixel_rounding_preserves_native_image(self):
+        image = self.root / 'rounded.png'
+        fixture_png(image, 1672, 941)
+        original = image.read_bytes()
+        target = helper.attach(self.manifest, 1, image, True)
+        self.assertEqual(Path(target).read_bytes(), original)
+        self.assertEqual(helper.png_size(target), (1672, 941))
+        fixture_png(image, 1672, 943)
+        with self.assertRaises(ValueError):
+            helper.png_size(image)
+
     def test_block_resume_actual_prompt(self):
         helper.block(self.manifest, 2, 'Export failed')
         image = self.root / 'fixture.png'
